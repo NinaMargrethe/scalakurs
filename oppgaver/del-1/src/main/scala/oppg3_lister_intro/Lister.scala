@@ -10,56 +10,56 @@ class Lister {
    * Should flip a list : List(1,2,3) -> List(3,2,1)
    */
   def reverse[A](myList: List[A]) =
-    myList //TODO
-
+    myList.reverse
   /**
    * Should keep only unique, distinct elements in a list:
    * List(1,1,1,1,1,1,1,2) -> List(1,2)
    */
   def removeDuplicates[A](myList: List[A]) =
-    myList //TODO
+    myList.distinct
 
   /**
    * Should return first element in a list (not as a list) :
    * List(1,2,3) -> 1
    */
   def findFirstElement[A](myList: List[A]) =
-    myList //TODO
+    myList.head
 
   /**
    * Should return last element in a list (not as a list)
    * List(1,2,3) -> 3
    */
   def findLastElement[A](myList: List[A]) =
-    myList //TODO
+    myList.last
 
   /**
    * Should return two first elements in a list (as a list):
    * List(1,2,3) -> List(1,2)
    */
   def findTwoFirstElements[A](myList: List[A]) =
-    myList //TODO
+    myList.take(2)
 
   /**
    * Should return remaining of a list when first element is removed (as a list)
    * List(1,2,3) -> List(2,3)
    */
   def findAllButFirstElement[A](myList: List[A]) =
-    myList //TODO
+    myList.drop(1)
 
   /**
+   *
    * Should return remaining of a list when first two elements are removed (as a list)
    * List(1,2,3) -> List(3)
    */
   def findAllButTwoFirstElements[A](myList: List[A]) =
-    myList //TODO
+    myList.drop(2)
 
   /**
    * Should return a sublist of Ints with only the even numbers in it
    * List(1,2,3,4) -> List(2,4)
    */
   def findEvenNumbers(myList: List[Int]) =
-    myList //TODO
+    myList.filter((param: Int)=>param%2==0)
 
   /**
    * Given a list of Ints, should think of these Ints as side-lengths in a cube
