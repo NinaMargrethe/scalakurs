@@ -5,7 +5,6 @@ import org.scalatest.FunSuite
 class PatternMatchingAndCaseClassesTest extends FunSuite {
 
   test ("should compute square of int or string") {
-    pending //TODO: remove
     assert(PatternMatchingAndCaseClasses.computeSquareOfIntOrString(4) === 16)
     assert(PatternMatchingAndCaseClasses.computeSquareOfIntOrString(6) === 36)
   }
