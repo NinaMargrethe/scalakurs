@@ -17,9 +17,9 @@ class Rational(n:Int, d:Int) {
    *       2   3   6   6
    * You don't need to find the greatest common divisor
    */
-  def add(that: Rational): Rational = {
-    val div =  this.denom * Rational.???
-  }
+  def add(that: Rational): Rational = ??? //{
+ //   val div =  this.denom * Rational.???
+//  }
 
   override def toString = this.numer.toString+"/"+this.denom
 }
