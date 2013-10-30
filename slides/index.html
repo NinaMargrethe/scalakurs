@@ -39,6 +39,11 @@
 			<div class="slides">
 
                 <section>
+                    <h3><a href="http://typesafe.com/platform/getstarted">http://typesafe.com/platform/getstarted</a></h3>
+                    <h4><a href="https://github.com/froden/scalakurs/tree/master/oppgaver/del-1">https://github.com/froden/scalakurs/tree/master/oppgaver/del-1</a></h4>
+                </section>
+
+                <section>
                     <h1>SCALA</h1>
                     <h3>Introduksjonskurs</h3>
                     <p>
@@ -178,7 +183,7 @@
                 </section>
 
                 <section>
-                    <p style="font-size: 1.5em;"><q cite="http://twitter.com/al3x"><strong>Basically</strong>, it's the future</q></p>
+                    <p style="font-size: 1.5em;"><q cite="http://twitter.com/al3x"><strong>Basically</strong>, it’s the future</q></p>
                     <p><a href="http://twitter.com/al3x">@al3x</a></p>
                     <aside class="notes">
                         <ul>
@@ -209,7 +214,7 @@
                   <h2>Definere ting</h2>
                   <pre><code class="scala" data-trim contenteditable>
  // En ikke endrbar verdi, tenk final i Java
-val fødselsnummer = 02017912345
+val fødselsnummer = "02017912345"
 
 // En endrbar variabel
 var navn: String = "Torbjørn Vatn"
@@ -312,10 +317,10 @@ p.age = 26
 class Person(age: Int) {
   val category = if (age < 35) "young" else "old"
 
-  def sayHi = "Hi, I'm " + category
+  def sayHi = "Hi, I’m " + category
 }
 
-new Person(30).sayHi //Hi, I'm young
+new Person(30).sayHi //Hi, I’m young
 					</code></pre>
 
                     <div class="fragment">
@@ -348,7 +353,7 @@ object Logger {
   def log(msg: String) = println(msg)
 }
 
-Logger.log("It's all good!")
+Logger.log("It’s all good!")
 					</code></pre>
 
                     <div class="fragment">
@@ -383,7 +388,7 @@ val p = Person("Frode", 33)
                     <h2>Traits</h2>
                     <pre><code class="scala" data-trim contenteditable>
 trait Animal {
-  def greet = "I'm an animal"
+  def greet = "I’m an animal"
 }
 
 class Dog extends Animal
@@ -410,7 +415,7 @@ class Fox extends Animal
 trait Animal {
   def say: String
 
-  def greet = "I'm an animal that says " + say
+  def greet = "I’m an animal that says " + say
 }
 
 class Dog extends Animal {
@@ -455,10 +460,10 @@ class Dog extends Animal with Fourlegged with Furry {
                     <h2>List</h2>
                     <h4 style="text-transform: none">scala.immutable</h4>
                     <ul>
-                        <li class="fragment">Implementerer isEmpty, head og tail.</li>
+                        <li class="fragment">Implementerer isEmpty, head og tail</li>
                         <li class="fragment">O(n) på de fleste operasjoner</li>
                         <li class="fragment">O(1) på prepend og head/tail-aksess</li>
-                        <li class="fragment">Egnet for rekursive løsninger basert på head:tail-aksess</li>
+                        <li class="fragment">Egnet for rekursive løsninger basert på head/tail-aksess</li>
                         <li class="fragment">Eksempler:
                         <pre><code class="scala" data-trim contenteditable>scala> 4 :: List(1, 2, 3) // Prepend, O(1)
 res0: List[Int] = List(4, 1, 2, 3)</code></pre>
@@ -473,7 +478,7 @@ res1: List[Int] = List(1, 2, 3, 4)</code></pre>
                     <h2>map()</h2>
                     <ul>
                         <li>map() tar inn en funksjon og utfører den på alle elementer</li>
-                        <li>map() transformerer listen ihht til funksjonen gitt inn</li>
+                        <li>map() transformerer listen i henhold til funksjonen gitt inn</li>
 
                     </ul>
 
@@ -695,11 +700,749 @@ res0: Boolean = true
                 <code>_*</code> betyr villlkårlig mange følgende elementer
             </section>
 
-			</div>
+                <section>
+                    <h1>SCALA</h1>
+                    <h3>Teknikker for funksjonell programmering</h3>
+                    <p>
+                        <small>Faggruppe for Scala & JVM</small>
+                    </p>
+                    <a class="image" href="http://bekk.no" target="_blank">
+                        <img src="images/bekk-logo-small.png" alt="Bekk">
+                    </a>
+                    <aside class="notes">
+                        <ul>
+                            <li>Velkommen til del 2 av Scalakurset</li>
+                            <li>Fokusere på verktøy som er nyttige ifm funksjonell programmering</li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>9. okt: Grunnleggende Scala</h3>
+                    <h3><strong>30. okt: Funksjonell programmering</strong></h3>
+                    <h3>11. nov: Webapp med Scala</h3>
+                    <aside class="notes">
+                        <ul>
+                            <li>Scalas standarbibliotek inneholder en rekke avanserte verktøy som gjør at man kan løse vanlig problemer på en mer funksjonell måte.</li>
+                            <li>Vi ser på hvordan disse kan hjelpe oss til å unngå nullverdier, håndtere exceptions og håndtere paralellitet.</li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                    <h2>SBT</h2>
+                    <h3><a href="http://www.scala-sbt.org/">Simple Build Tool</a></h3>
+                    <h4>Byggeverktøy for Scala og Java</h4>
+                </section>
+
+                <section>
+                    <h3>SBT</h3>
+                    <ul>
+                        <li>Enkel konfig for enkle prosjekter</li>
+                        <li>Fleksibel konfig i Scalakode for avanserte prosjekter</li>
+                        <li>Dependency-management ala Maven</li>
+                        <li>Kontinuerlig kompilering/testing/app-restart ved kodeendringer</li>
+                        <li>... og mye mer</li>
+                    </ul>
+                    <aside class="notes">
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Kom i gang med SBT</h3>
+                    <h4 style="text-align: left;">Start SBT interaktivt</h4>
+                    <pre><code class="bash" data-trim contenteditable>
+$ cd scalakurs/oppgaver/del-2
+$ ./sbt
+[info] Loading project definition from /Users/frode/dev/scalaogjvm/scalakurs/oppgaver/del-2/project
+[info] Set current project to scalakurs-ntnu-del2 (in build file:/Users/frode/dev/scalaogjvm/scalakurs/oppgaver/del-2/)
+>
+                    </code></pre>
+
+                    <h4 style="text-align: left;">Kjør testene kontinuerlig</h4>
+                    <pre><code class="bash" data-trim contenteditable>
+> ~test
+                    </code></pre>
+                    <h4 style="text-align: left;">Stop kjøring av tester</h4>
+                    <pre><code class="bash" data-trim contenteditable>
+> &lt;enter&gt;
+                    </code></pre>
+                    <h4 style="text-align: left;">Andre nyttige kommandoer</h4>
+                    <pre><code class="bash" data-trim contenteditable>
+> clean
+> compile
+> run
+                    </code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Eclipse og IntelliJ</h3>
+                    <h4 style="text-align: left;">Generer prosjektfiler for Eclipse</h4>
+                    <pre><code class="bash" data-trim contenteditable>
+> eclipse
+                    </code></pre>
+
+                    <h4 style="text-align: left;">Generer prosjektfiler for IntelliJ</h4>
+                    <pre><code class="bash" data-trim contenteditable>
+> gen-idea
+                    </code></pre>
+                    <p>Deretter kan du velge File -> Open -> scalakurs/oppgaver/del-2</p>
+                    <aside class="notes">
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                    <h2>Repetisjon</h2>
+                    <h3>(og litt nytt)</h3>
+                    <aside class="notes">
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Variabler og metoder</h3>
+                    <pre><code class="scala" data-trim contenteditable>
+//immutable value, type inferred
+val name = "Frode"
+
+//immutable value with type
+val name2: String = "Frode"
+
+//method
+def sayHiTo(name: String) = s"Hi $name"
+
+//method with explicit return type
+def add(a: Int, b:Int): Int = a + b
+					</code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Alt er expressions</h3>
+                    <pre><code class="scala" data-trim contenteditable>
+//result of last expression is returned
+val date = {
+  println("getting the date")
+  new Date()
+}
+
+//if is an expression
+def checkLength(str: String) = if (str.length < 50) "ok" else "too long"
+
+//try catch is an expression
+val head = try {
+  Source.fromFile("app.log").getLines().take(10)
+} catch {
+  case _: IOException => List()
+}
+					</code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Funksjoner er verdier</h3>
+                    <pre><code class="scala" data-trim contenteditable>
+//function value
+val add = (a: Int, b: Int) => a + b
+
+//convert method to function
+val replaceAll = "Frode".replaceAll _
+replaceAll("e", "3")
+//res0: String = Frod3
+
+//functions as arguments
+def combine(a: Int, b: Int, func: (Int, Int) => Int) = func(a, b)
+
+combine(2, 3, (x, y) => x * y))
+//res1: Int = 6
+					</code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Klasser og objekter</h3>
+                    <pre><code class="scala" data-trim contenteditable>
+class Person(val name: String, val age: Int) {
+  override def toString = name + " " + age
+}
+
+//object with apply factory method
+object Person {
+  def apply(name: String, age: Int) = new Person(name, age)
+}
+
+Person("Frode", 33)
+//res2: Person = Frode 33
+					</code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>case class og pattern matching</h3>
+                    <pre><code class="scala" data-trim contenteditable>
+trait Tree
+
+case class Node(left: Tree, right: Tree) extends Tree
+case class Leaf(value: String) extends Tree
+
+Node(Leaf("left"), Leaf("right")) match {
+  case Node(_, Leaf(value)) => "right tree was leaf with value " + value
+  case Node(_, right) => "right was " + right
+}
+//res3: String = right tree was leaf with value right
+					</code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Generics</h3>
+                    <p>Som i Java, men med [T] i stedet for &lt;T&gt;</p>
+                    <pre><code class="scala" data-trim contenteditable>
+//value of generic type List with type argument String
+val names: List[String] = List("Arild", "Sjur", "Frode")
+
+//generic method with one type parameter
+def lastElement[A](list: List[A]) = list.last
+
+//generic mapping function with two type parameters
+def map[A, B](value: A)(func: A => B): B = func(value)
+
+map("Frode".toList)(lastElement)
+//res4: Char = e
+					</code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </aside>
+                </section>
+
+
+                <section>
+                    <h2>Oppgaver</h2>
+                    <img height="100" src="images/puzzle.jpg" alt="oppgaver"><br>
+                    Oppgaver: <a href="http://git.io/zLhs5Q">http://git.io/zLhs5Q</a><br>
+                    Slides: <a href="http://froden.github.io/scalakurs/#/35">http://froden.github.io/scalakurs</a>
+                </section>
+
+                <section>
+                    <h1>For comprehensions</h1>
+                    <pre><code class="scala" data-trim contenteditable>
+def even(from: Int, to: Int): List[Int] =
+  for (i <- List.range(from, to) if i % 2 == 0) yield i
+                    </code></pre>
+                    <pre><code class="scala" data-trim contenteditable>
+scala> even(0, 20)
+res0: List[Int] = List(0, 2, 4, 6, 8, 10, 12, 14, 16, 18)
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Flere generatorer</h2>
+                                        <pre><code class="scala" data-trim contenteditable>
+scala> for(  x <- (1 to 2 );  y <- (1 to 3)  ) yield (x,y)
+
+res0: scala.collection.immutable.IndexedSeq[(Int, Int)] = \
+  Vector((1,1), (1,2), (1,3), (2,1), (2,2), (2,3))
+                                        </code></pre>
+
+                </section>
+
+                <section>
+                    <h2>Guards</h2>
+                    <pre><code class="scala" data-trim contenteditable>
+def getFactors(n: Long) =
+  for (x <- ( 1 to n ); if n % x == 0) yield x
+                    </code></pre>
+                    <pre><code class="scala" data-trim contenteditable>
+scala> getFactors(20)
+res0: scala.collection.immutable.IndexedSeq[Int] = \
+  Vector(1, 2, 4, 5, 10, 20)
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h2>Syntaktisk sukker</h2>
+                    <ul>
+                        <li>
+                            For comprehensions er syntaktisk sukker for map, flatMap and filter og foreach
+                        </li>
+                        <li>
+                            Eksempler hentet fra: <a href="http://stackoverflow.com/a/1059501">http://stackoverflow.com/a/1059501</a>
+                        </li>
+                    </ul>
+                    <pre class="fragment"><code class="scala" data-trim contenteditable>
+for(x <- c1; y <- c2; z <-c3) {...}
+// compiles to
+c1.foreach(x => c2.foreach(y => c3.foreach(z => {...})))
+                    </code></pre>
+                    <pre class="fragment"><code class="scala" data-trim contenteditable>
+for(x <- c1; y <- c2; z <- c3) yield {...}
+// compiles to
+c1.flatMap(x => c2.flatMap(y => c3.map(z => {...})))
+                    </code></pre>
+                    <pre class="fragment"><code class="scala" data-trim contenteditable>
+for(x <- c; if cond) yield {...}
+// compiles to (in Scala 2.8+)
+c.withFilter(x => cond).map(x => {...})
+                    </code></pre>
+                </section>
+
+                <section>
+                    <h1>Option</h1>
+                    <h3>For å representere "noe" eller "ingenting"</h3>
+                </section>
+
+                <section>
+                    <h3 style="text-transform: none;"><code>Option[A]</code></h3>
+                    <h3 style="text-transform: none;"><code>Some[A]&nbsp;&nbsp;&nbsp;None</code></h3>
+                    <aside class="notes">
+                        <ul>
+                            <li>Option er en abstrakt type med 2 subtyper:</li>
+                            <li>Some - som representerer en verdi av en bestemt type (f.eks. String)</li>
+                            <li>None - som representerer ingen verdi</li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Eksempel</h3>
+                    <pre><code class="scala" data-trim contenteditable>
+val something: Option[String] = Some("A string")
+val nothing: Option[String] = None
+
+something.isEmpty
+//res4: Boolean = false
+nothing.isEmpty
+//res5: Boolean = true
+
+something.getOrElse("")
+//res6: String = A string
+nothing.getOrElse("")
+//res7: String = ""
+                    </code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                    <p><q cite="http://qconlondon.com/london-2009/presentation/Null+References:+The+Billion+Dollar+Mistake">«Null References: The Billion Dollar Mistake»</q></p>
+                    <p style="position: relative;"><small>Sir Tony Hoare</small></p>
+                </section>
+
+                <section>
+                    <h3>Problemet med null</h3>
+                    <pre><code class="scala" data-trim contenteditable>
+val name: String = request.getParameter("name")
+
+val upperCaseName = if (name != null) {
+  val trimmed = name.trim
+  if (!trimmed.isEmpty) {
+    trimmed.toUpperCase
+  } else {
+    null
+  }
+} else {
+  null
+}
+                    </code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li>request.getParameter returnerer null hvis parametret ikke finnes</li>
+                            <li>For det første må vi HUSKE å sjekke for null. Det er ingen indikasjon på at vi ikke alltid får en String ut</li>
+                            <li>For det andre må vi som regel sjekke for null flere ganger.</li>
+                            <li>For det tredje så må den som kalte oss, eller den vi kaller også sjekke for null, osv...</li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Option løser problemet</h3>
+                    <pre><code class="scala" data-trim contenteditable>
+val name: Option[String] = request.getParameter("name")
+
+val upprCaseName = name map (_.trim) filter (!_.isEmpty) map (_.toUpperCase)
+                    </code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li>request.getParameter returnerer Option av String</li>
+                            <li>Vi må forholde oss til at parametret ikke finnes (ellers kompileringsfeil)</li>
+                            <li>Hvis vi sender upperCaseName til en annen metode må enten den ta inn Option[String] eller vi må kunne gi en defaultverdi</li>
+                            <li>Hvis vi returnerer upperCaseName vil det være tydelig for mottaker at det kan hende vi returnerer ingenting</li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Option er en collection med 0 eller 1 element</h3>
+                    <pre><code class="scala" data-trim contenteditable>
+val myOptional: Option[String] = Some("Hello")
+
+myOptional.foreach(println)
+// Hello
+myOptional.exists(_.startsWith("H"))
+//res0: Boolean = true
+myOptional.map(_.toLowerCase)
+//res2: Option[String] = Some(hello)
+myOptional.flatMap(s => Some(s + " Frode"))
+//res3: Option[String] = Some(Hello Frode)
+myOptional.getOrElse("!!")
+//res4: String = Hello
+                    </code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </aside>
+                </section>
+
+      
+
+                <section>
+                    <h3>Kan pattern matches</h3>
+                    <pre><code class="scala" data-trim contenteditable>
+val optionalPerson: Option[Person] = Some(Person("Frode"))
+
+optionalPerson match {
+  case Some(Person("Frode")) => println("Fant Frode")
+  case Some(_) => println("Fant noen andre")
+  case None => println("Ikke en person")
+}
+                    </code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                    <h3>Kan brukes i for-comprehensions</h3>
+                    <pre><code class="scala" data-trim contenteditable>
+val firstName: Option[String] = Some("Arild")
+val lastName: Option[String] = Some("Nilsen")
+
+val fullName = for {
+  first <- firstName
+  last <- lastName
+} yield first + " " last
+                    </code></pre>
+                    <aside class="notes">
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                  <h1>Try</h1>
+                  <h3>Funksjonell feilhåndtering</h3>
+                </section>
+
+                <section>
+                    <h3 style="text-transform: none;"><code>Try[A]</code></h3>
+                    <h3 style="text-transform: none;"><code>Succes[A]&nbsp;&nbsp;&nbsp;Failure[A]</code></h3>
+                    <aside class="notes">
+                        <ul>
+                            <li>Try er en abstrakt type med 2 subtyper:</li>
+                            <li>Success - en Try som inneholder det du er på jakt etter </li>
+                            <li>Failure - en Try som inneholder en evt. Throwable</li>
+                        </ul>
+                    </aside>
+                </section>
+
+                <section>
+                  <h2>Minner mye om Option</h2>
+                  Representerer enn kalkulering med resultat av type A
+                  <ul><li>Kan resultere i en Success[A] hvis det går bra</li>
+                      <li>eller en Failure[A] som wrapper en Throwable</li></ul>
+                </section>
+
+                <section>
+                  <h3>Kaste og fange exceptions</h3>
+                  <pre><code class="scala" data-trim contenteditable>
+case class Kunde(alder: Int)
+class Sigaretter
+case class ForUngException(melding: String) extends Exception(melding)
+
+def kjøpSigg(kunde: Kunde): Sigaretter =
+  if (kunde.alder < 18)
+    throw ForUngException(s"Kunden må være over 18, men er ${kunde.alder}")
+  else new Sigaretter
+                  </code></pre>
+                  <div class="fragment"><pre><code class="scala" data-trim contenteditable>
+val ungKunde = Kunde(15)
+val melding = try {
+  val røyken = kjøpSigg(ungKunde)
+  s"Her har du $røyken din!"
+} catch { 
+  case ForUngException(mld) => mld
+}
+println(s"ERRR: $melding")
+                    </code></pre>
+                  </div>
+                </section>
+
+                <section>
+                  <h3>Prøve og feile</h3>
+                  <pre><code class="scala" data-trim contenteditable>
+case class Kunde(alder: Int)
+class Sigaretter
+case class ForUngException(melding: String) extends Exception(melding)
+
+def kjøpSigg(kunde: Kunde): Try[Sigaretter] =
+  Try(if (kunde.alder < 18)
+    throw ForUngException(s"Kunden må være over 18, men er ${kunde.alder}")
+  else new Sigaretter)
+                  </code></pre>
+                  <div class="fragment"><pre><code class="scala" data-trim contenteditable>
+val ungKunde = Kunde(15)
+val melding = kjøpSigg(ungKunde) match {
+  case Success(røyken) => s"Her har du $røyken din!"
+  case Failure(e) => e.getMessage
+}
+println(s"ERRR: $melding")
+                    </code></pre>
+                  </div>
+                </section>
+                <section>
+                  <h2>Komme seg ut av knipa</h2>
+                  <pre><code class="scala" data-trim contenteditable>
+case class Kunde(alder: Int)
+trait Produkt
+class Sigaretter extends Produkt
+class Tyggis extends Produkt
+case class ForUngException(melding: String) extends Exception(melding)
+
+def kjøpSigg(kunde: Kunde): Try[Produkt] =
+  Try(if (kunde.alder < 18)
+      throw ForUngException(s"Kunden må være over 18, men er ${kunde.alder}")
+        else new Sigaretter)
+                  </code></pre>
+                  <div class="fragment"><pre><code class="scala" data-trim contenteditable>
+val ungKunde = Kunde(15)
+val produkt = kjøpSigg(ungKunde) recover {
+  case fue: ForUngException => new Tyggis  
+}
+println(s"Hurra jeg fikk kjøpt ${produkt.get}")
+                  </code></pre></div>
+                  </section>
+
+                <section>
+                  <h2>Jobbe med Try</h2>
+                    <ul>
+                      <li><code>getOrElse</code></li>
+                      <li><code>map / flatMap</code></li>
+                      <li><code>filter / foreach</code></li>
+                      <li><code>for comprehensions</code></li>
+                      <li><code>pattern matching</code></li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h1>Futures and Promises</h1>
+                    <ul>
+                        <li class="fragment">SIP-14 - redesign of scala.concurrent</li>
+                        <li class="fragment">Introduced in Scala 2.10</li>
+                        <li class="fragment">Placeholder object for a result that does not yet exist</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>SIP-14 definition</h2>
+
+                    <div class="fragment">
+                        <blockquote width="900" cite="http://skillsmatter.com/podcast/scala/the-future-i-was-promised">A Future
+                            is a read-handle to a single value (read-many) that may be available within a specific time-frame
+                        </blockquote>
+                    </div>
+                    <div class="fragment">
+                        <blockquote width="900" cite="http://skillsmatter.com/podcast/scala/the-future-i-was-promised">A Promise
+                            is a write-handle to a single value (write-once) that should be made available within a specific
+                            time-frame
+                        </blockquote>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Hello Future</h2>
+
+                    <div class="fragment">
+        <pre><code>println("Test print before future")
+val s = "hello"
+
+val f = future {
+  Thread.sleep(10)
+  s + " future!"
+}
+
+println("Test print after future")
+
+// Completely asynchronous
+f.onSuccess { case s => println(s) }
+
+// Blocks until the future is ready
+Await.ready(f, Duration.Inf)</code></pre>
+		</div>
+                    <div class="fragment">Output: <br/><pre><code>Test print before future
+Test print after future
+hello future!</code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Basic Operations on Futures</h2>
+
+                    <div class="fragment">
+            <pre><code>//Asynchronously processes the value in
+//the future once the value becomes available.
+def foreach[U](f: T => U): Unit
+
+//Creates a new future by applying a function to the successful
+//result of this future.
+def map[S](f: T => S): Future[S]
+
+//Creates a new future by applying a function to the successful
+//result of this future, and returns the result of the function
+//as the new future.
+def flatMap[S](f: T => Future[S]): Future[S]
+
+//Creates a new future by filtering the value of the current future
+//with a predicate.
+def filter(p: T => Boolean): Future[T]</code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Error handling</h2>
+
+                    <div class="fragment">
+<pre><code>val riskyRes = future { riskyWork() }
+val safeRes = future { safeWork() }
+
+val finalRes = riskyRes recoverWith {
+  case e: IllegalArgumentException => safeRes
+}</code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Futures are composeable</h2>
+                    <div class="fragment">
+    <pre><code>val keys = future { readFile("keys.txt") }
+val values = future { readFile("values.txt") }
+
+val data = keys.zip(values)
+
+val hashMap = data.map((ls: (List[String], List[String])) => {
+  ls._1.zip(ls._2).toMap
+})
+
+hashMap.recover {
+  case e: FileNotFoundException => {
+    Map[String, String]()
+  }
+}.onSuccess {
+  case map => {
+    println(map)
+  }
+}
+
+Await.result(hashMap, Duration.Inf)</code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Do exersices</h2>
+                    <ul>
+                        <li class="fragment">git clone https://github.com/arild/scala-workshop.git</li>
+                        <li class="fragment">Complete predefined tests for MyFutures</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>"Futures" vs. "Promises"</h2>
+                    <ul>
+                        <li class="fragment">"Future", "promise", "delay" and "deferred" used interchangeably</li>
+                        <li class="fragment">Complementary primitives</li>
+                        <li class="fragment">"Promise" exclusively used in the JavaScript world</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h2>Producer Consumer Example</h2>
+
+                    <div class="fragment">
+<pre><code>val p = promise[T]
+val f = p.future
+
+val producer = future {
+  val result = produceSomething()
+  p success result
+  continueDoingSomethingUnrelated()
+}
+
+val consumer = future {
+  startDoingSomething()
+  f onSuccess {
+    case res => doSomething(res)
+  }
+}</code></pre>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>Resources</h2>
+                    <ul>
+                        <li><a href="http://docs.scala-lang.org/overviews/core/futures.html">Scala Documentation - Futures and Promises</a></li>
+                        <li><a href="http://skillsmatter.com/podcast/scala/the-future-i-was-promised">Scala Days 2012 - The Future I was Promised</a></li>
+                        <li><a href="http://domenic.me/2012/10/14/youre-missing-the-point-of-promises/">You're Missing the Point of Promises</a></li>
+                    </ul>
+                </section>
+
+
+            </div>
 
 		</div>
 
-		<script src="lib/js/head.min.js"></script>
+
+        <script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.min.js"></script>
 
 		<script>

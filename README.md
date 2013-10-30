@@ -11,7 +11,7 @@ Tidspunkt:
 Opplegg
 =======
   
-## Dag 1: Basic
+## [Del 1](oppgaver/del-1): Basic
 
 ### Gjennomføring
 1. Introdusere konspet med 2 slides
@@ -32,14 +32,14 @@ Oppgaver i [Typseafe activator](http://typesafe.com/platform/getstarted) - Torbj
 6. Pattern matching og case classes
    * Oppgaver
 
-# Dag 2: Funksjonell prog
+## [Del 2](oppgaver/del-2): Funksjonell prog
+* litt repetisjon av syntaks + intro til SBT
+* for comprehensions
 * Option
 * Try
 * Future
-* for comprehensions
-* Oppgaver med funksjonelle datastrukterer (se funprog) 
 
-# Dag 3: Unfiltered/scalatra + js-front
+## Del 3: Unfiltered/scalatra + js-front
 * [Unfiltered](http://unfiltered.databinder.net/Unfiltered.html)
 * [Scalatra](http://www.scalatra.org/)
 * Single page JS-app med ulike sider for hver oppgave. Oppgaven blir å implementere backend.
